@@ -12,7 +12,7 @@ func init() {
 
 func initServer() {
 	http.HandleFunc("/uplink", handleUplink)
-	err := http.ListenAndServe(":9010", nil)
+	err := http.ListenAndServe(":9011", nil)
 	if err != nil {
 		panic(err)
 	}
