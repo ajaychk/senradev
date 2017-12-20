@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+var ChanUplink = make(chan interface{}, 10)
+
 func init() {
 	go initServer()
 }
@@ -19,14 +21,22 @@ func initServer() {
 }
 
 func handleUplink(w http.ResponseWriter, r *http.Request) {
-	log.Println("uplink received")
-	var tmp interface{}
+	tmp := struct {
+		DevEui     string `json:"devEui"`
+		GatewayEui string `json:"gwEui"`
+		JoinID     string `json:"joinId"`
+		PDU        string `json:"pdu"`
+		Port       string `json:"port"`
+		SeqNum     string `json:"seqno"`
+		TxTime     string `json:"txtime"`
+	}{}
 
 	if err := json.NewDecoder(r.Body).Decode(&tmp); err != nil {
 		log.Println("invalid data received")
 		w.Write([]byte("invalid data received"))
 		return
 	}
+	ChanUplink <- tmp
 	log.Println("data received", tmp)
 	w.Write([]byte("ok"))
 }
