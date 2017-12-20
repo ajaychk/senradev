@@ -24,10 +24,10 @@ func handleUplink(w http.ResponseWriter, r *http.Request) {
 	tmp := struct {
 		DevEui     string `json:"devEui"`
 		GatewayEui string `json:"gwEui"`
-		JoinID     string `json:"joinId"`
+		JoinID     int    `json:"joinId"`
 		PDU        string `json:"pdu"`
-		Port       string `json:"port"`
-		SeqNum     string `json:"seqno"`
+		Port       int    `json:"port"`
+		SeqNum     int    `json:"seqno"`
 		TxTime     string `json:"txtime"`
 	}{}
 
