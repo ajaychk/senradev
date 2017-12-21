@@ -31,9 +31,9 @@ function rcvUplink(){
         console.log("connection error")
     }
     ws.onmessage = function(e){
-       // var data = JSON.parse(e.data)
+        var data = JSON.parse(e.data)
         console.log("message received ", e.data)
-        updateUplink(e.data)
+        updateUplink(data)
     }
 }
 
