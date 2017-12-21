@@ -1,14 +1,6 @@
 $(function(){
     console.log("uplink set up")
     table = $('#tUplink').DataTable()
-    table.row.add([
-        2,
-        '3:6',
-        'eeeeee',
-        'www',
-        'ddddddddddd',
-        1
-    ]).draw(false)
 
     enableSearchAll()
 
@@ -43,14 +35,14 @@ function updateUplink(data){
         return
     }
     console.log('data is', data)
-    var $tr = `<tr><td>`+data.seqno+`</td>
-                    <td>`+data.txtime+`</td>
-                    <td>`+data.devEui+`</td>
-                    <td>`+data.gwEui+`</td>
-                    <td>`+data.pdu+`</td>
-                    <td>`+data.port+`</td>
-                </tr>`
-    $('#tUplink tbody').prepend($tr)
+    table.row.add([
+        data.seqno,
+        data.txtime,
+        data.devEui,
+        data.gwEui,
+        data.pdu,
+        data.port
+    ]).draw(false)
 }
 
 function enableSearchAll(){
