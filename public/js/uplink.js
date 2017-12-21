@@ -1,10 +1,21 @@
-;
 $(function(){
     console.log("uplink set up")
+    table = $('#tUplink').DataTable()
+    table.row.add([
+        2,
+        '3:6',
+        'eeeeee',
+        'www',
+        'ddddddddddd',
+        1
+    ]).draw(false)
+
+    enableSearchAll()
+
     rcvUplink()
 });
 
-
+var table;
 //Receive uplink
 function rcvUplink(){
     var ws = new WebSocket('ws://'+location.host+'/uplink')
@@ -32,6 +43,38 @@ function updateUplink(data){
         return
     }
     console.log('data is', data)
-    $('#lastUpdate').text(Date())
-    $('#uplink').text(data)
+    var $tr = `<tr><td>`+data.seqno+`</td>
+                    <td>`+data.txtime+`</td>
+                    <td>`+data.devEui+`</td>
+                    <td>`+data.gwEui+`</td>
+                    <td>`+data.pdu+`</td>
+                    <td>`+data.port+`</td>
+                </tr>`
+    $('#tUplink tbody').prepend($tr)
+}
+
+function enableSearchAll(){
+    table.columns( '.select-filter' ).every( function () {
+        var that = this;
+     
+        // Create the select list and search operation
+        var select = $('<select />')
+            .appendTo(
+                this.footer()
+            )
+            .on( 'change', function () {
+                that
+                    .search( $(this).val() )
+                    .draw();
+            } );
+     
+        // Get the search data for the first column and add to the select list
+        this
+            .cache( 'search' )
+            .sort()
+            .unique()
+            .each( function ( d ) {
+                select.append( $('<option value="'+d+'">'+d+'</option>') );
+            } );
+    } );
 }

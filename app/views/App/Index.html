@@ -1,7 +1,7 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<header class="jumbotron" style="background-color:#A9F16C">
+<header class="jumbotron">
   <div class="container">
     <div class="row">
       <h1>HAVELLS SENRA LIGHT NETWORK DEVELOPMENT</h1>
@@ -11,15 +11,39 @@
 
 <div class="container">
   <div class="row">
-    <div class="span6">
-      {{template "flash.html" .}}
-    </div>
-  </div>
-
-  <div class="row">
     <div class="col-md-12">
-      <h3>Uplink updated at <span id="lastUpdate"></span></h3>
-      <h3>Uplink received is <span id="uplink"></span></h3>
+      <table id="tUplink" class="display" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Timestamp</th>                
+            <th>DeviceID</th>
+            <th>GatewayID</th>
+            <th>PDU</th>
+            <th>Port</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Number</th>
+            <th>Timestamp</th>                
+            <th>DeviceID</th>
+            <th>GatewayID</th>
+            <th>PDU</th>
+            <th>Port</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>3:05:07</td>
+            <td>ee</td>
+            <td>rrr</td>
+            <td>dnnknwnknk</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
