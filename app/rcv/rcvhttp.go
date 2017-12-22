@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	m "github.com/senradev/app/models"
 )
 
 var ChanUplink = make(chan interface{}, 10)
@@ -30,22 +32,15 @@ func handleUplink(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ChanUplink <- ul
+	if err := m.Dbm.Insert(ul); err != nil {
+		log.Println(err)
+	}
 	log.Println("data received", ul)
 	w.Write([]byte("ok"))
 }
 
-type uplinkType struct {
-	DevEui     string `json:"devEui"`
-	GatewayEui string `json:"gwEui"`
-	JoinID     int    `json:"joinId"`
-	PDU        string `json:"pdu"`
-	Port       int    `json:"port"`
-	SeqNum     int    `json:"seqno"`
-	TxTime     string `json:"txtime"`
-}
-
-func getUplink(r *http.Request) (*uplinkType, error) {
-	tmp := new(uplinkType)
+func getUplink(r *http.Request) (*m.Uplink, error) {
+	tmp := new(m.Uplink)
 
 	if err := json.NewDecoder(r.Body).Decode(&tmp); err != nil {
 		log.Println("invalid data received", err)
